@@ -11,7 +11,7 @@ class ErrorMessage extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,7 +21,15 @@ class ErrorMessage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 20),
-          ElevatedButton(onPressed: onPressed, child: Text('Reintentar'))
+          ElevatedButton(
+            onPressed: onPressed,
+            child: Text('Reintentar'),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green.shade900,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                textStyle:
+                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          )
         ],
       ),
     );

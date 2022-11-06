@@ -14,7 +14,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
   @override
   Future<List<UsersModel>> getListUser() async {
     final url = Uri.parse("https://jsonplaceholder.typicode.com/users");
-    final response = await client.get(url);
+    final response = await client.get(url).timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {
       return usersModelFromJson(response.body);

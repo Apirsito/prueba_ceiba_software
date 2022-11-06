@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:proyect_clean/core/errors/exceptions.dart';
 import 'package:proyect_clean/core/errors/failure.dart';
@@ -16,6 +18,16 @@ class DetailRepositpryImpl implements DetailRepository {
       final userDetail = await remoteDataSource.getDetailUser(user);
       return Right(userDetail);
     } on ServerException {
+      return Left(
+        ServerFailure(
+            message: 'Ha ocurrido un error al obtener los datos del servidor'),
+      );
+    } on SocketException catch (_) {
+      return Left(
+        ServerFailure(
+            message: 'Ha ocurrido un error al obtener los datos del servidor'),
+      );
+    } catch (error) {
       return Left(
         ServerFailure(
             message: 'Ha ocurrido un error al obtener los datos del servidor'),

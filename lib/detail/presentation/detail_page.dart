@@ -53,13 +53,12 @@ class DetailPage extends StatelessWidget {
     } else if (state is DetailError) {
       return ErrorMessage(
         message: state.message,
-        onPressed: () {},
+        onPressed: () => _getUserDetail(context, user.id),
       );
     } else {
-      return Container(
-        child: Center(
-          child: Text('Error'),
-        ),
+      return ErrorMessage(
+        message: "Ocurrio un error",
+        onPressed: () => _getUserDetail(context, user.id),
       );
     }
   }

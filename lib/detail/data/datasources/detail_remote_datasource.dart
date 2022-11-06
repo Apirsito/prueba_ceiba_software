@@ -15,7 +15,7 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
   Future<List<DetailModel>> getDetailUser(int user) async {
     final url =
         Uri.parse("https://jsonplaceholder.typicode.com/posts?userId=$user");
-    final response = await client.get(url);
+    final response = await client.get(url).timeout(Duration(seconds: 5));
 
     if (response.statusCode == 200) {
       return detailFromJson(response.body);

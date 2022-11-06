@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:proyect_clean/core/errors/failure.dart';
 import 'package:proyect_clean/core/globals.dart';
+import 'package:proyect_clean/core/preferences.dart';
 import 'package:proyect_clean/users/data/models/users_model.dart';
 import 'package:proyect_clean/users/domain/entities/users.dart';
 import 'package:proyect_clean/users/domain/usecases/get_list_users.dart';
@@ -17,15 +18,16 @@ class UsersCubit extends Cubit<UsersState> {
 
   void getNewListUser() async {
     emit(UsersLoading());
-    final failureOrUserList = await getListUser();
 
+    final failureOrUserList = await getListUser();
     emit(_eitherLoadedOrErrorState(failureOrUserList));
   }
 
   void searchUsers(String userText) async {
     if (userText.isNotEmpty) {
       final suggestions = Globals.listUser
-          .where((element) => element.name.contains(userText))
+          .where((element) =>
+              element.name.toLowerCase().contains(userText.toLowerCase()))
           .toList();
       emit(UsersLoaded(suggestions));
     } else {
@@ -37,6 +39,7 @@ class UsersCubit extends Cubit<UsersState> {
       Either<Failure, List<UsersModel>> failureOrUserList) {
     return failureOrUserList
         .fold((failure) => UsersError(_mapFailureToMessage(failure)), (users) {
+      Preferences.userListInString = usersModelToJson(users);
       Globals.listUser = users;
       return UsersLoaded(users);
     });

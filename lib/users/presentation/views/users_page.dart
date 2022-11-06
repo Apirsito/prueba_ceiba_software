@@ -53,10 +53,9 @@ class UsersPage extends StatelessWidget {
         onPressed: () => _getUserList(context),
       );
     } else {
-      return Container(
-        child: Center(
-          child: Text('Error'),
-        ),
+      return ErrorMessage(
+        message: "Ocurrio un error",
+        onPressed: () => _getUserList(context),
       );
     }
   }
